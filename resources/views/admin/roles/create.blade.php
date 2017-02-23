@@ -5,11 +5,11 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">{{ $action }} Usuario</div>
+                <div class="panel-heading">Crear Rol</div>
                 <div class="panel-body">
-                    <form id="{{ $action }}" class="form-horizontal" role="form" method="POST" action="{{ route('roles.store') }}" novalidate>
+                    <form class="form-horizontal roleForm" role="form" method="POST" action="{{ route('roles.store') }}" novalidate>
                         {{ csrf_field() }}
-                        @extends('admin.roles.form')
+                        @include('admin.roles.form')
                     </form>
                 </div>
             </div>
@@ -21,7 +21,7 @@
         theme: 'bootstrap'
     });
     document.addEventListener('turbolinks:load', function() {
-        $('#Crear').on('submit', function(e) {
+        $('.roleForm').on('submit', function(e) {
             e.preventDefault();
             var $form = $(this);
             var $promise = $.post($form.attr('action'), $form.serialize());

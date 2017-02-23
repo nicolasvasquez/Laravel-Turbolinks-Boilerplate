@@ -46,14 +46,26 @@ class RolesController extends Controller
         return redirect('/roles')->with('_turbolinks_location', '/roles');   
     }
 
-    public function edit()
+    public function edit(Role $role)
     {
+        $permissions = Permission::all();
 
+        return view('admin.roles.edit', compact('permissions', 'role'));
     }
 
-    public function update(Request $request, Role $role)
+    public function update(TurbolinksRequest $request, Role $role)
     {
-        
+        $this->validate($request, [
+            'name' => 'sometimes|required|max:255|unique:roles,name,' . $role->id,
+            'label' => 'sometimes|required|max:255',
+        ]);
+
+        $role->fill($request->only(['name', 'label']))->save();
+        $role->syncPermissions(
+            Permission::whereIn('id', $request->permissions)->pluck('name')
+        );
+
+        return redirect('/roles')->with('_turbolinks_location', '/roles');
     }
 
     public function delete()
