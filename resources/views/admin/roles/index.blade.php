@@ -70,6 +70,6 @@
                 });
             });
         })
-    });s
+    });
 </script>
 @endsection

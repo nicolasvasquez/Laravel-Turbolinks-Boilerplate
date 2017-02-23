@@ -42,7 +42,7 @@
                             <label class="col-md-4 control-label">Permisos</label>
 
                             <div class="col-md-6">
-                                <select class="role-multiselect col-md-12" multiple="multiple" name="roles[]">
+                                <select class="role-multiselect col-md-12" multiple="multiple" name="permissions[]">
                                     @foreach ($permissions as $permission)
                                         <option value="{{ $permission->id }}">{{ $permission->label}}</option>
                                     @endforeach
