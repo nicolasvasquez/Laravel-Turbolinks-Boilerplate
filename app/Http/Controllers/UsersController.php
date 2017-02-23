@@ -23,11 +23,9 @@ class UsersController extends Controller
 
     public function create()
     {
-        $route = 'users.store';
-        $action = 'Crear';
         $roles = Role::all();
 
-        return view('admin.users.form', compact('route', 'action', 'roles'));
+        return view('admin.users.create', compact('roles'));
     }
 
     public function store(TurbolinksRequest $request)
@@ -47,16 +45,24 @@ class UsersController extends Controller
 
     public function edit(User $user)
     {
-        $route = 'users.update';
-        $action = 'Editar';
         $roles = Role::all();
 
-        return view('admin.users.form', compact('action', 'roles', 'route', 'user'));
+        return view('admin.users.edit', compact('roles', 'user'));
     }
 
-    public function update()
+    public function update(TurbolinksRequest $request, User $user)
     {
+        $this->validate($request, [
+            'name'     => 'sometimes|required|max:255',
+            'email'    => 'sometimes|required|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'sometimes|required|confirmed|min:6',
+            'roles.*'  => 'exists:roles,name'
+        ]);
 
+        $user->fill($request->all())->save();
+        $user->syncRoles($request->roles);
+
+        return redirect('/users')->with('_turbolinks_location', '/users');
     }
 
     public function delete()

@@ -28,7 +28,7 @@ class RolesController extends Controller
         $action = 'Crear';
         $permissions = Permission::all();
 
-        return view('admin.roles.form', compact('route', 'action', 'permissions'));
+        return view('admin.roles.create', compact('route', 'action', 'permissions'));
     }
 
     public function store(TurbolinksRequest $request)
@@ -54,6 +54,11 @@ class RolesController extends Controller
     public function update(Request $request, Role $role)
     {
         
+    }
+
+    public function delete()
+    {
+
     }
 
     public function destroy(Role $role)
