@@ -1,0 +1,3 @@
+require('./bootstrap');
+
+Turbolinks.start();
