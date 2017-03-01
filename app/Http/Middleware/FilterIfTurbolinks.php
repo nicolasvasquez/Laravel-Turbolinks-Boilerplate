@@ -27,6 +27,7 @@ class FilterIfTurbolinks
             $response->setContent(join(";", $script));
             $response->header('Content-Type', 'application/javascript');
             $response->setStatusCode(202);
+            
         } else if ($turbolinksLocation) {
             $response->header("Turbolinks-Location", $turbolinksLocation);
         }

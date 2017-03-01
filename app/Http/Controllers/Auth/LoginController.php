@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use App\Http\Requests\TurbolinksRequest;
+use App\Http\Requests\LoginRequest;
 use \Auth;
 
 class LoginController extends Controller
@@ -39,9 +39,9 @@ class LoginController extends Controller
         $this->middleware('guest', ['except' => 'logout']);
     }
 
-    public function login(TurbolinksRequest $request)
+    public function login(LoginRequest $request)
     {
-        $this->validateLogin($request);
+        //$this->validateLogin($request);
 
         if ($this->hasTooManyLoginAttempts($request)) {
             //return $this->fireLockoutEvent($request);
@@ -59,4 +59,5 @@ class LoginController extends Controller
 
         return $this->sendFailedLoginResponse($request);
     }
+
 }

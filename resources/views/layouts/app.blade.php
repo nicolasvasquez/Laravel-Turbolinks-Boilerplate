@@ -54,6 +54,7 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
+                            <li><a href="{{ url('/prueba') }}">Prueba</a></li>
                             <li><a href="{{ url('/home') }}">Home</a></li>
                             <li><a href="{{ route('roles.index') }}">Roles</a></li>
                             <li><a href="{{ route('users.index') }}">Usuarios</a></li>
