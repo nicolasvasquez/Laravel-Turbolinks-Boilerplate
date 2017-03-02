@@ -26,6 +26,7 @@
                         <br>
                         <br>
                         <select class="col-md-12 select1" name="region">
+                            <option value=""></option>
                             @foreach($reg as $re)
                                 <option value="{{ $re->id }}" 
                                 @if ($re->id == old('region'))
@@ -51,82 +52,70 @@
     </div>
 </div>
 <script>
-    console.log('comuna', {!! json_encode(old('comuna')) !!});
-    var a = $(".select1").select2({
-        theme: 'bootstrap',
-        placeholder: "Select a state",
-        allowClear: true,
-    });
+    $.fn.select2.defaults.set("theme", "bootstrap");
 
-    var b = $(".select22").select2({
-        theme: 'bootstrap',
-    });
+    var $regiones = $(".select1");
+    $regiones.select2();
 
-    var c = $(".select3").select2({
-        theme: 'bootstrap',
-    });
+    var $comunas = $(".select22");
+    $comunas.select2();
+
+    var $establecimientos = $(".select3");
+    $establecimientos.select2();
 
     if ( {!! json_encode(old('region')) !!} ) {
         var $promise = $.get('/prueba/' + {!! json_encode(old('region')) !!} );
         $promise.done(function(data) {
-            $('.select22').html('').select2({data: [{id: '', text: ''}]});
-            $('.select3').html('').select2({data: [{id: '', text: ''}], theme: 'bootstrap'});
+            $comunas.html('').select2({data: [{id: '', text: ''}]});
+            $establecimientos.html('').select2({data: [{id: '', text: ''}]});
             $.each(data, function(key, value) {
-                $('.select22').append($('<option>', {
+                $comunas.append($('<option>', {
                 value: value.id,
                 text: value.name
-            })).select2({
-                theme: 'bootstrap',
+            })).select2();
             });
-            });
-            $(".select22").select2({theme: 'bootstrap'}).val( {!! json_encode(old('comuna')) !!} ).trigger('change.select2');
+            $comunas.select2().val( {!! json_encode(old('comuna')) !!} ).trigger('change.select2');
 
             if ( {!! json_encode(old('comuna')) !!} ) {
             var $promise = $.get('/prueba/comuna/' + {!! json_encode(old('comuna')) !!} );
             $promise.done(function(data) {
-                $('.select3').html('').select2({data: [{id: '', text: ''}]});
+                $establecimientos.html('').select2({data: [{id: '', text: ''}]});
                 $.each(data, function(key, value) {
-                    $('.select3').append($('<option>', {
+                    $establecimientos.append($('<option>', {
                     value: value.id,
                     text: value.name
-                })).select2({
-                    theme: 'bootstrap',
+                })).select2();
                 });
-                });
-                $(".select3").select2({theme: 'bootstrap'}).val( {!! json_encode(old('establecimiento')) !!} ).trigger('change.select2');
+                $establecimientos.select2().val( {!! json_encode(old('establecimiento')) !!} ).trigger('change.select2');
             });
         } 
         });    
     }
 
-    $(".select1").change(function(data) {
+    $regiones.change(function(data) {
         var $promise = $.get('/prueba/' + $(this).find(':selected').val());
         $promise.done(function(data) {
-            $('.select22').html('').select2({data: [{id: '', text: ''}]});
-            $('.select3').html('').select2({data: [{id: '', text: ''}], theme: 'bootstrap'});
+            $comunas.html('').select2({data: [{id: '', text: ''}]});
+            $establecimientos.html('').select2({data: [{id: '', text: ''}]});
             $.each(data, function(key, value) {
-                $('.select22').append($('<option>', {
+                $comunas.append($('<option>', {
                 value: value.id,
                 text: value.name
-            })).select2({
-                theme: 'bootstrap',
-            });
+            })).select2();
             });
         });
     });
 
-    $('.select22').change(function() {
+    $comunas.change(function() {
         console.log('Event22')
         var $promise = $.get('/prueba/comuna/' + $(this).find(':selected').val());
         $promise.done(function(data) {
-            $('.select3').html('').select2({data: [{id: '', text: ''}]});
+            $establecimientos.html('').select2({data: [{id: '', text: ''}]});
             $.each(data, function(key, value) {
-                $('.select3').append($('<option>', {
+                $establecimientos.append($('<option>', {
                 value: value.id,
                 text: value.name
-            })).select2({
-                theme: 'bootstrap',
-            });
+            })).select2();
             });
         });
     });
@@ -138,9 +127,6 @@
         var $promise = $.post($form.attr('action'), $form.serialize());
         $promise.done(function(data) {
             console.log('done', data);
-            $(document).one('turbolinks:render', function(){
-                toastr.success('Bienvenido');
-            });
         });
         $promise.fail(function(data){
             console.log('fail', data);
