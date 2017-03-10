@@ -1,56 +1,50 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Select Anidado</div>
-                <div class="panel-body">
-                    <form id="form22" action="/prueba">
-                        {{ csrf_field() }}
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Nombre</label>
+    <div class="panel panel-default">
+        <div class="panel-heading">Select Anidado</div>
+        <div class="panel-body">
+            <form id="form22" action="/prueba">
+                {{ csrf_field() }}
+                <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                    <label for="name" class="col-md-4 control-label">Nombre</label>
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ $user->name or old('name') }}">
+                    <div class="col-md-6">
+                        <input id="name" type="text" class="form-control" name="name" value="{{ $user->name or old('name') }}">
 
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <br>
-                        <br>
-                        <br>
-                        <select class="col-md-12 select1" name="region">
-                            <option value=""></option>
-                            @foreach($reg as $re)
-                                <option value="{{ $re->id }}" 
-                                @if ($re->id == old('region'))
-                                    selected="selected"
-                                @endif
-                                >{{ $re->name }}</option>
-                            @endforeach
-                        </select>
-                        <br>
-                        <select class="col-md-12 select22" name="comuna">
-    
-                        </select>
-                        <br>
-                        <select class="col-md-12 select3" name="establecimiento">
-                            
-                        </select>
-                        <br>
-                        <button type="submit" class="btn btn-default">Submit</button>
-                    </form>
+                        @if ($errors->has('name'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('name') }}</strong>
+                            </span>
+                        @endif
+                    </div>
                 </div>
-            </div>
+                <br>
+                <br>
+                <br>
+                <select class="col-md-12 select1" name="region">
+                    <option value=""></option>
+                    @foreach($reg as $re)
+                        <option value="{{ $re->id }}" 
+                        @if ($re->id == old('region'))
+                            selected = "selected"
+                        @endif
+                        >{{ $re->name }}</option>
+                    @endforeach
+                </select>
+                <br>
+                <select class="col-md-12 select22" name="comuna">
+
+                </select>
+                <br>
+                <select class="col-md-12 select3" name="establecimiento">
+                    
+                </select>
+                <br>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
         </div>
     </div>
-</div>
 <script>
     $.fn.select2.defaults.set("theme", "bootstrap");
 
@@ -71,7 +65,7 @@
             $.each(data, function(key, value) {
                 $comunas.append($('<option>', {
                 value: value.id,
-                text: value.name
+                text:  value.name
             })).select2();
             });
             $comunas.select2().val( {!! json_encode(old('comuna')) !!} ).trigger('change.select2');
@@ -83,7 +77,7 @@
                 $.each(data, function(key, value) {
                     $establecimientos.append($('<option>', {
                     value: value.id,
-                    text: value.name
+                    text:  value.name
                 })).select2();
                 });
                 $establecimientos.select2().val( {!! json_encode(old('establecimiento')) !!} ).trigger('change.select2');
@@ -100,7 +94,7 @@
             $.each(data, function(key, value) {
                 $comunas.append($('<option>', {
                 value: value.id,
-                text: value.name
+                text:  value.name
             })).select2();
             });
         });
@@ -114,7 +108,7 @@
             $.each(data, function(key, value) {
                 $establecimientos.append($('<option>', {
                 value: value.id,
-                text: value.name
+                text:  value.name
             })).select2();
             });
         });

@@ -83,7 +83,24 @@
             </div>
         </nav>
 
-        @yield('content')
+        @if (Auth::guest())
+            @yield('content')
+        @else
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-2">
+                        @include ('layouts.sidebar')
+                    </div>
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-10">
+                                @yield('content')
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
 </body>
 </html>

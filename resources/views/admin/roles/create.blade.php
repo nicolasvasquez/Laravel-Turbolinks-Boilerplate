@@ -1,21 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Crear Rol</div>
-                <div class="panel-body">
-                    <form class="form-horizontal roleForm" role="form" method="POST" action="{{ route('roles.store') }}" novalidate>
-                        {{ csrf_field() }}
-                        @include('admin.roles.form')
-                    </form>
-                </div>
-            </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Crear Rol</div>
+        <div class="panel-body">
+            <form class="form-horizontal roleForm" role="form" method="POST" action="{{ route('roles.store') }}" novalidate>
+                {{ csrf_field() }}
+                @include('admin.roles.form')
+            </form>
         </div>
     </div>
-</div>
 <script>
     $(".role-multiselect").select2({
         theme: 'bootstrap'
