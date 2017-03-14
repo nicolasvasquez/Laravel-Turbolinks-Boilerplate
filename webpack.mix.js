@@ -13,6 +13,7 @@ const { mix } = require('laravel-mix');
 
 mix.js([
     'resources/assets/js/app.js',
+    //'resources/assets/js/helpers/queryParams.js',
     'resources/assets/js/service/serv.js',
     'node_modules/select2/dist/js/select2.js'
     ], 'public/js')
