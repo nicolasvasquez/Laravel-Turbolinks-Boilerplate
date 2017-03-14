@@ -18,9 +18,9 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="text" class="form-control"></td>
-                        <td><input type="text" class="form-control"></td>
-                        <td><input type="text" class="form-control"></td>
+                        <td><input id="nameSearch" type="text" class="form-control" placeholder="Nombre"></td>
+                        <td><input id="labelSearch" type="text" class="form-control" placeholder="Nombre publico"></td>
+                        <td><input id="permissionSearch" type="text" class="form-control" placeholder="Permiso"></td>
                         <td></td>
                     </tr>
                     @foreach ($roles as $role)
@@ -44,9 +44,66 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $roles->links() }}
         </div>
     </div>
 <script>
+    function parseParams(params) {
+        var aux = {
+            name: null,
+            label: null,
+            permission: null
+        };
+        if (params) {
+            if(params.indexOf('name') != -1) {
+                aux.name = params.split('name=')[1].split('&&')[0];
+            }
+            if(params.indexOf('label') != -1) {
+                aux.label = params.split('label=')[1].split('&&')[0];
+            }
+            if(params.indexOf('permission') != -1) {
+                aux.permission = params.split('permission=')[1].split('&&')[0];
+            }
+        }
+
+        return aux;
+    }
+
+    function buildQueryParams(params) {
+		var page = 1;
+		var query = '?page=' + page;
+
+		for (var paramKey in params) {
+			if (paramKey !== 'page' && params[paramKey] !== null) {
+				query += '&' + paramKey + '=' + params[paramKey];
+			}
+		}
+		return query;
+	}
+
+    var $nameSearch = $('#nameSearch');
+    var $labelSearch = $('#labelSearch');
+    var $permissionSearch = $('#permissionSearch');
+
+    var fullPath = window.location.href.split('.dev')[1];
+    var path = fullPath.split('?')[0];
+    var params = parseParams(fullPath.split('?')[1]);    
+
+    $nameSearch.change(function() {
+        params.name = $nameSearch.val();
+        location.assign(path + buildQueryParams(params));
+    });
+
+    $labelSearch.change(function() {
+        params.label = $labelSearch.val();
+        location.assign(path + buildQueryParams(params));
+    });
+
+    $permissionSearch.change(function() {
+        params.permission = $permissionSearch.val();
+        location.assign(path + buildQueryParams(params));
+    });
+
     document.addEventListener("turbolinks:load", function() {
         $('.formDelete').on('submit', function(e) {
             e.preventDefault();

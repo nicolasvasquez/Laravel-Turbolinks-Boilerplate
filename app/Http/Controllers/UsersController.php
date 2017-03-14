@@ -12,7 +12,7 @@ class UsersController extends Controller
 {
     public function index(TurbolinksRequest $request, UserFilter $filter)
     {
-        $users = User::with('roles')->filter($filter)->paginate();
+        $users = User::with('roles')->filter($filter)->paginate(8);
 
         return view('admin.users.index', compact('users'));
     }

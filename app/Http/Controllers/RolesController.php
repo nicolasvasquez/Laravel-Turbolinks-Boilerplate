@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\TurbolinksRequest;
+use App\Filters\RoleFilter;
 use App\Role;
 use Spatie\Permission\Models\Permission;
 
 class RolesController extends Controller
 {
-    public function index()
+    public function index(TurbolinksRequest $request, RoleFilter $filter)
     {
         $roles = Role::with('permissions')->paginate();
 
