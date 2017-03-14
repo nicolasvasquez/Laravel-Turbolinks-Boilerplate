@@ -13,7 +13,7 @@ class RolesController extends Controller
 {
     public function index(TurbolinksRequest $request, RoleFilter $filter)
     {
-        $roles = Role::with('permissions')->paginate();
+        $roles = Role::with('permissions')->paginate(5);
 
         return view('admin.roles.index', compact('roles'));
     }

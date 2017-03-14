@@ -48,21 +48,15 @@
         </div>
     </div>
 <script>
-    function parseParams(params) {
-        var aux = {
-            name: null,
-            email: null,
-            rol: null
-        };
-        if(params) {
-            if(params.indexOf('name') != -1) {
-                aux.name = params.split('name=')[1].split('&&')[0];
-            }
-            if(params.indexOf('email') != -1) {
-                aux.email = params.split('email=')[1].split('&&')[0];
-            }
-            if(params.indexOf('rol') != -1) {
-                aux.rol = params.split('rol=')[1].split('&&')[0];
+    function parseQueryParams(paramsPath) {
+        var aux = {};
+
+        if (paramsPath) {
+            var params = paramsPath.split('&');
+            for (var el in params) {
+                if (params[el].split('=')[0] != 'page') {
+                    aux[params[el].split('=')[0]] = params[el].split('=')[1];
+                }
             }
         }
 
@@ -87,7 +81,11 @@
 
     var fullPath = window.location.href.split('.dev')[1];
     var path = fullPath.split('?')[0];
-    var params = parseParams(fullPath.split('?')[1]);    
+    var params = parseQueryParams(fullPath.split('?')[1]);
+
+    $nameSearch.val(params.name || '');
+    $emailSearch.val(params.email || '');
+    $rolSearch.val(params.rol || '');
 
     $nameSearch.change(function() {
         params.name = $nameSearch.val();
