@@ -4,21 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\TurbolinksRequest;
+use App\Filters\UserFilter;
 use App\User;
 use App\Role;
 
 class UsersController extends Controller
 {
-    public function index()
+    public function index(TurbolinksRequest $request, UserFilter $filter)
     {
-        $users = User::with('roles')->paginate();
+        $users = User::with('roles')->filter($filter)->paginate(5);
 
         return view('admin.users.index', compact('users'));
     }
 
-    public function show()
+    public function show(User $user)
     {
-
+        
     }
 
     public function create()
